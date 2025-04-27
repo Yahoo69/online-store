@@ -1,16 +1,17 @@
 <?php
 	session_start();
-	$_SESSION['shopping_cart']=array();
-    $_SESSION['finaly_price']=0.0;
-	$_SESSION['shopping_finished']=false;
 
-	if(isset($_COOKIE['shopping_finished'])){
+	if(isset($_COOKIE['shopping_finished']) && !isset($_SESSION['shopping_finished'])){
 		if(!$_COOKIE['shopping_finished'])
 		{
-			$_SESSION['shopping_cart']=$_COOKIE['shopping_cart'];
-    		$_SESSION['finaly_price']=$_COOKIE['finaly_price'];
+			$_SESSION['shopping_cart']=$_COOKIE['shopping_cart']; // TODO przerobić pod nowe tablice
 			$_SESSION['shopping_finished']=$_COOKIE['shopping_finished'];
 		}
+	}
+
+	if(!isset($_SESSION['shopping_finished'])){
+		$_SESSION['shopping_cart']=array();
+		$_SESSION['shopping_finished']=false;
 	}
 ?>
 
@@ -24,8 +25,11 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-			<div class="row h1 bg-black text-white pb-3 pt-3 px-3">
-				sklepzewszystkim.pl
+			<div class="row bg-black pb-3 pt-3 px-3">
+				<a href="index.php" class="h1 text-white col-11">sklepzewszystkim.pl</a>
+				<form method="post" action="cart.php"  class="col-1 float-right">
+					<button class="btn btn-sm"><img src="shopping_cart_icon.png" width="50px" alt="shopping_cart"></button>
+				</form>
 			</div>
 			<div class="row py-5">
 				<?php
@@ -49,13 +53,14 @@
 							$price=ucfirst($row["cena"]);
 							$description=$row["opis"];
 							echo <<<CARD
-							<form class="card col-3" method="post" action="add_to_cart.php">
+							<form class="card border-warning col-3" method="post" action="add_to_cart.php">
 								<div class="card-body">
 									<img class="card-img-top" alt="Zdjęcie produktu" src="$img" height="200px">
-									<h5 class="card-title" name="name" value="$name">$name</h5>
-									<h6 class="card-subtitle" name="price" value="$price">$price zł</h6
+									<h5 class="card-title" value="$name">$name</h5>
+									<h6 class="card-subtitle" value="$price">$price zł</h6
 									<p class="card-text">$description</p>
 									<input type="hidden" name="product_id" value="$id">
+									<input type="hidden" name="price" value="$price">
 									<input type="submit" class="btn btn-outline-success" value="Kup">
 								</div>
 							</form>
@@ -68,18 +73,3 @@
 		</div>
 	</body>
 </html>
-
-<?php
-	if(!$_SESSION['shopping_finished']){
-		setcookie('shopping_cart',$_SESSION['shopping_cart'],time()+10000,'/');
-		setcookie('finaly_price',$_SESSION['finaly_price'],time()+10000,'/');
-		setcookie('shopping_finished',$_SESSION['shopping_finished'],time()+10000,'/');
-	}else{
-		unset($_COOKIE['shopping_cart']);
-		unset($_COOKIE['finaly_price']);
-		unset($_COOKIE['shopping_finished']);
-	}
-
-	session_destroy();
-?>
-
