@@ -73,7 +73,7 @@ $_SESSION['finaly_price'] = 0.0;
                             TABLE;
                 }
             }
-            $finaly_price=$_SESSION['final_price'];
+            $finaly_price=$_SESSION['finaly_price'];
 
             echo "</tbody></table></div><div class=\"col-8\"></div>
             <h2 class=\"h2 text-left col-3 mb-5\">Łączna cena:$finaly_price</h2";
