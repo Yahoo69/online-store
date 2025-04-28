@@ -4,7 +4,7 @@
 	if(isset($_COOKIE['shopping_finished']) && !isset($_SESSION['shopping_finished'])){
 		if(!$_COOKIE['shopping_finished'])
 		{
-			$_SESSION['shopping_cart']=$_COOKIE['shopping_cart']; // TODO przerobić pod nowe tablice
+			$_SESSION['shopping_cart']=array_combine(explode(";",$_COOKIE["shopping_cart_keys"]),explode(";",$_COOKIE["shopping_cart_values"])); // TODO przerobić pod nowe tablice
 			$_SESSION['shopping_finished']=$_COOKIE['shopping_finished'];
 		}
 	}
@@ -67,7 +67,8 @@
 							CARD;
 						}
 					}
-				
+					
+					$conn->close();
 				?>
 			</div>
 		</div>

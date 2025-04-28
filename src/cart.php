@@ -1,6 +1,6 @@
 <?php
-session_start();
-$_SESSION['finaly_price'] = 0.0;
+    session_start();
+    $_SESSION['finaly_price'] = 0.0;
 ?>
 <!DOCTYPE html>
 <html>
@@ -76,7 +76,9 @@ $_SESSION['finaly_price'] = 0.0;
             $finaly_price=$_SESSION['finaly_price'];
 
             echo "</tbody></table></div><div class=\"col-8\"></div>
-            <h2 class=\"h2 text-left col-3 mb-5\">Łączna cena:$finaly_price</h2";
+            <h2 class=\"h2 text-left col-3 mb-5\">Łączna cena:$finaly_price zł</h2";
+
+            $conn->close();
             ?>
         </div>
         <form method="post" action="get_client_data.php" class="row">
@@ -85,5 +87,4 @@ $_SESSION['finaly_price'] = 0.0;
         </form>
     </div>
 </body>
-
 </html>
