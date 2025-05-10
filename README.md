@@ -1,5 +1,5 @@
 # online store
- # 🛒 Simple Online Store (PHP)
+ # 🛒 Online Store (PHP)
 
 This is a online store built using PHP and MySQL. It allows users to browse products, add them to a cart, and place orders.
 
